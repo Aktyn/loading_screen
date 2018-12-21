@@ -1,0 +1,331 @@
+$body-font: Helvetica, Arial;
+
+// $bg-dark: #455A64;
+$bg-dark: #4FC3F7;
+$segmentsize: 30px;
+
+// $color1: #8BC34A;
+$color1: #009688;
+// $color2: #AED581;
+$color2: #4DB6AC;
+$color2_alpha: #4DB6AC40;
+$color3: #004D40;
+// $color2_alpha: #AED58140;
+// $color3: #689F38;
+
+$shadowcolor: #0004;
+
+body, html, textarea, input, button {
+    padding: 0px;
+    margin: 0px;
+
+    font-family: $body-font;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
+    box-sizing: border-box;
+    vertical-align: middle;
+
+    text-shadow: 0px 1px 5px #0003;
+}
+
+body {
+    // background-color: $bg-dark;
+    color: #fff;
+    text-align: center;
+    background-image: linear-gradient($bg-dark 0%, $bg-dark 10%, black 30%, black 70%, $bg-dark 90%, $bg-dark 100%);
+	height: 100vh;
+}
+
+#logo {
+	width: 200px;
+	height: 200px;
+	background: url('../img/logo.png') center no-repeat;
+	background-size: contain;
+	position: fixed;
+	right: 0px;
+	top: 0px;
+}
+
+.progressbar_container {
+	margin: 20px 0px;
+	position: fixed;
+	height: $segmentsize*2;
+	left: 0px;
+	right: 0px;
+	bottom: 5%;
+	// background-color: $bg-dark;
+}
+
+.progressbar_container > *, .progressbar_container *::after {
+	position: absolute;
+	left: 0px; right: 0px;
+	margin: auto;
+}
+
+.progresscircle {
+	background: $color1;
+	width: $segmentsize*2;
+	height: $segmentsize*2;
+	line-height: $segmentsize;
+	border-radius: $segmentsize;
+	
+	box-shadow: 0px 4px 0px 0px $color3, 5px 7px 5px $shadowcolor;
+	
+	z-index: 19;
+	top: 0px;
+}
+
+.progresspercent {
+	line-height: $segmentsize*1.6;
+	
+	top: $segmentsize*0.2;
+	border-radius: $segmentsize;
+	font-size: 18px;
+	font-weight: bold;
+	z-index: 50;
+
+	background-color: $color2;
+	width: $segmentsize*1.6;
+	height: $segmentsize*1.6;
+
+	transition: transform 0.5s cubic-bezier(.87,-.41,.19,1.44);
+	transform: scale(1);
+}
+
+.progresspercent:hover {
+	transform: scale(2);
+}
+
+.percent_top, .percent_bottom {
+	background: $color1;
+	width: $segmentsize * 2.0;
+	height: $segmentsize;
+	box-shadow: 0px 4px 0px 0px $color3;
+}
+
+.percent_top {
+	z-index: 1;
+	border-top-left-radius: $segmentsize*2;
+	border-top-right-radius: $segmentsize*2;
+	
+	top: 0px;
+}
+
+.percent_bottom {
+	z-index: 21;
+	border-bottom-left-radius: $segmentsize*2;
+	border-bottom-right-radius: $segmentsize*2;
+	bottom: 0px;
+
+	clip-path: polygon(0% 50%, 100% 50%, 150% 150%, 0% 150%);
+}
+
+.progressbar_border {
+	height: $segmentsize;
+	width: $segmentsize * 20 - 1px;
+	border-radius: $segmentsize/2;
+	border: 1px solid $color1;
+	background-color: $color2_alpha;
+	
+	top: $segmentsize/2;
+	z-index: 1;
+}
+
+.progressbar {
+	z-index: 20;
+	top: $segmentsize/2;
+}
+
+.progressbar > span {
+	width: $segmentsize;
+	height: $segmentsize;
+	display: inline-block;
+	border-radius: $segmentsize/4;
+	margin: 0px;
+	background-color: $color1;
+
+	transform: scale(0) translate(0px, 150px);
+	transition: transform 1s cubic-bezier(.87,-.41,.19,1.44),
+				border-radius 1s 0.5s ease-in-out;
+}
+
+.progressbar > span.on {
+	transform: scale(1) translate(0px, 0px);
+	border-radius: 0px;
+	box-shadow: 0px 4px 0px 0px $color3, 5px 7px 5px $shadowcolor;
+}
+
+.progressbar > span.on:first-child {
+	border-top-left-radius: $segmentsize !important;
+	border-bottom-left-radius: $segmentsize !important;
+}
+
+.progressbar > span.on:last-child {
+	border-top-right-radius: $segmentsize !important;
+	border-bottom-right-radius: $segmentsize !important;
+}
+
+.progressbar > span::after {
+	content: " ";
+	display: inline-block;
+	width: $segmentsize;
+	height: $segmentsize*0.6;
+	top: 0px;
+	bottom: 0px;
+	background-color: $color2;
+
+	transform: scale(1, 0);
+	transition: transform 0.35s 0.75s ease-in-out;
+}
+
+.progressbar > span.on::after {
+	transform: scale(1, 1);
+}
+
+.progressbar > span.on:first-child::after {
+	border-top-left-radius: $segmentsize !important;
+	border-bottom-left-radius: $segmentsize !important;
+	width: $segmentsize*0.8;
+	left: auto;
+}
+
+.progressbar > span.on:last-child::after {
+	border-top-right-radius: $segmentsize !important;
+	border-bottom-right-radius: $segmentsize !important;
+	width: $segmentsize*0.8;
+	right: auto;
+}
+
+/////////////////////////////////
+.videoContainer {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	pointer-events: none;
+	z-index: -1;
+
+	opacity: 0.8;
+	// opacity: 0;
+}
+
+.videoContainer > iframe {
+	width: 100%;
+	height: 100%; 
+	// width: 1280px;
+	// height: 720px;
+}
+
+#player {
+	display: none;
+}
+
+#playpause_btn {
+	position: fixed;
+	left: 0px;
+	top: 0px;
+
+	width: 50px;
+	height: 50px;
+	border-bottom-right-radius: 10px;
+	
+	background: url('../img/volume_mute.png') no-repeat;
+	background-position: 10px center;
+	background-size: auto 60%;
+	background-color: #455A64a0;
+
+	box-shadow: 0px 0px 5px $shadowcolor;
+	cursor: pointer;
+	overflow: hidden;
+
+	transition: width 0.3s 0.2s ease-in-out, border-radius 0.3s 0.2s ease-in-out;
+	text-align: center;
+}
+
+#playpause_btn:hover {
+	width: 180px;
+	border-top-right-radius: 50px;
+	border-bottom-right-radius: 50px;
+}
+
+#playpause_btn::after {
+	color: #abc;
+}
+
+#playpause_btn.on::after {
+	content: "Wycisz";
+}
+
+#playpause_btn.off::after {
+	content: "Włącz\00a0 dźwięk";
+}
+
+#playpause_btn::after {
+	margin-right: 20px;
+	display: inline-block;
+	width: 100px;
+	line-height: 50px;
+	height: 50px;
+	float: right;
+	font-weight: bold;
+}
+
+#playpause_btn::before {
+	content: " ";
+	display: inline-block;
+	width: 50px;
+	height: 50px;
+	float: left;
+	background-size: 60% !important;
+
+	background: url('../img/volume_up.png') 10px center no-repeat;
+	opacity: 0;
+	transition: opacity 0.5s ease-in-out;
+}
+
+#playpause_btn.on::before {
+	opacity: 1;
+}
+
+/*#playpause_btn.off::before {
+	background: url('../img/volume_mute.png') left no-repeat;
+}*/
+/*#playpause_btn::before {
+	content: " ";
+	display: inline-block;
+	// float: left;
+
+	border: 0;
+	background: transparent;
+	box-sizing: border-box;
+	width: 0;
+	height: 30px;
+	margin: 10px;
+
+	border-color: transparent transparent transparent #fff;
+	transition: 100ms all ease;
+	cursor: pointer;
+
+	// play state
+	border-style: solid;
+	border-width: 15px 0 15px 25px;
+
+	opacity: 0.66;
+}
+
+#playpause_btn.on::before {
+	border-style: double;
+	border-width: 0px 0 0px 25px;
+}
+
+#playpause_btn:hover::before {
+	opacity: 1;
+}*/
