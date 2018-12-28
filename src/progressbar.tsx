@@ -11,16 +11,25 @@ export default class ProgressBar extends React.Component<any, LoadingState> {
 		progress: 0
 	};
 
+    private visible_progress = 0;
+    private updateInterval: NodeJS.Timeout | number;
+
 	constructor(props: any) {
 		super(props);
 
         //fake progess
         /*let p=0;
         setInterval(() => {
-            this.updateProgress(p+=(Math.random()*Math.random()*5.0));
+            p+=(Math.random()*Math.random()*5.0);
             if(p > 100)
                 p = 100;
+            this.updateProgress(p);
         }, 100);*/
+
+        this.updateInterval = setInterval(() => {
+            if(this.state.progress > this.visible_progress)
+                this.visible_progress += 1;
+        }, 1000 / 20);
 	}
 
 	onUpdate(e: MessageEvent) {
@@ -44,11 +53,14 @@ export default class ProgressBar extends React.Component<any, LoadingState> {
 	}
 
 	componentWillUnmount() {
+        clearInterval(this.updateInterval as number);
 		window.removeEventListener('message', this.onUpdate.bind(this));
 	}
 
     updateProgress(percent: number) {
-        this.setState({progress: percent|0});
+        this.setState({
+            progress: Math.max( this.state.progress, percent|0 )
+        });
     }
 
 	render() {
@@ -59,13 +71,13 @@ export default class ProgressBar extends React.Component<any, LoadingState> {
                 {new Array(ProgressBar.SEG_COUNT).fill(0).map((s, i) => {
                     return <span 
                         key={i} 
-                        className={this.state.progress/100*ProgressBar.SEG_COUNT > i ? 'on' : ''}>
+                        className={this.visible_progress/100*ProgressBar.SEG_COUNT > i ? 'on' : ''}>
                        </span>;
                 })}
             </div>
             <div className='percent_bottom'></div>
             <div className='progresscircle'></div>
-            <div className='progresspercent'>{this.state.progress}%</div>
+            <div className='progresspercent'>{this.visible_progress}%</div>
 		</div>;
 	}
 }

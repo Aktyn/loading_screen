@@ -5,7 +5,7 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const autoprefixer = require('autoprefixer');
 
-const isDevelopment = process.env.NODE_ENV !== 'production';
+const isDevelopment = false;//process.env.NODE_ENV !== 'production';
 
 module.exports = {
     entry: {
@@ -79,6 +79,17 @@ module.exports = {
                             sourceMap: isDevelopment
                         }
                     }
+                ]
+            },
+            {
+                test: /\.ttf$/,
+                use: [
+                    {
+                        loader: 'ttf-loader',
+                        options: {
+                            name: './font/[name].[ext]',
+                        },
+                    },
                 ]
             },
             {

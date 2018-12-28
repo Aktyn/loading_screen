@@ -41,13 +41,66 @@ body {
 }
 
 #logo {
-	width: 200px;
-	height: 200px;
+	width: 150px;
+	height: 150px;
 	background: url('../img/logo.png') center no-repeat;
 	background-size: contain;
 	position: fixed;
 	right: 0px;
 	top: 0px;
+}
+
+#discord_link {
+	position: fixed;
+	bottom: 0px;
+	text-align: center;
+	display: block;
+	width: 100vw;
+	font-size: 25px;
+	font-weight: bold;
+	height: 70px;
+	line-height: 70px;
+	// text-shadow: 0px 2px #006064, 0px 0px 5px #0008;
+	color: transparent;
+	text-shadow: 
+		1px 0px $color2_alpha, 
+		-1px 0px $color2_alpha, 
+		0px -1px $color2_alpha, 
+		0px 1px $color2_alpha;
+}
+
+#discord_link::after {
+	content: attr(title);
+	display: block;
+	position: fixed;
+	bottom: 0px;
+	width: 100vw;
+	color: #1e4a4e;
+	z-index: 50;
+	text-shadow: none;
+}
+
+#discord_link > span {
+	display: inline-block;
+	animation: wave 8s ease-in-out infinite;
+}
+
+//16 letters
+@for $i from 1 through 16 {
+	#discord_link > span:nth-child(#{$i}) {
+		animation-delay: #{0 + $i/16}s;
+	}
+}
+
+@keyframes wave {
+	0%, 100% {
+		// transform: scale(0.75);
+		color: #fffa;
+	}
+	#{0+3}%, #{100-3}% {
+		// transform: scale(1.0);
+		color: transparent;
+	}
 }
 
 .progressbar_container {
@@ -56,7 +109,7 @@ body {
 	height: $segmentsize*2;
 	left: 0px;
 	right: 0px;
-	bottom: 5%;
+	bottom: 40px;
 	// background-color: $bg-dark;
 }
 
@@ -86,6 +139,7 @@ body {
 	border-radius: $segmentsize;
 	font-size: 18px;
 	font-weight: bold;
+	text-shadow: 0px 2px $color1;//, 0px 0px 5px $shadowcolor;
 	z-index: 50;
 
 	background-color: $color2;
@@ -148,13 +202,13 @@ body {
 	margin: 0px;
 	background-color: $color1;
 
-	transform: scale(0) translate(0px, 150px);
+	transform: scale(0);// translate(0px, 0px);
 	transition: transform 1s cubic-bezier(.87,-.41,.19,1.44),
 				border-radius 1s 0.2s ease-in-out;
 }
 
 .progressbar > span.on {
-	transform: scale(1) translate(0px, 0px);
+	transform: scale(1);// translate(0px, 0px);
 	border-radius: 0px;
 	box-shadow: 0px 4px 0px 0px $color3, 5px 7px 5px $shadowcolor;
 }
