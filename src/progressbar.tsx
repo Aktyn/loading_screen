@@ -33,7 +33,6 @@ export default class ProgressBar extends React.Component<any, LoadingState> {
 	}
 
 	onUpdate(e: MessageEvent) {
-        //console.log(e);
         try {
             //@ts-ignore
             let handler = handlers[e.data.eventName];
@@ -122,13 +121,6 @@ var handlers = {
             states[data.type] = {};
             states[data.type].count = 0;
             states[data.type].done = 0;   
-            
-
-            //NOTE: We increment the stateCount if we do receive the INIT_CORE.
-            //      Because INIT_CORE is the first type, it will not always be invoked due to a race condidition.
-            //      See Issue #1 on github.
-            //if(data.type == types[0])
-            //    stateCount++;
         }
     },
 

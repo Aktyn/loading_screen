@@ -34,10 +34,6 @@ export default class extends React.Component<any, PlayerState> {
 
         this.player.setVolume(DEFAULT_VOLUME);
         this.player.load('1nQkCfkRVus', true);
-         
-        /*player.on('playing', () => {
-            console.log(player.getDuration()); // => 351.521
-        });*/
 	}
 
     switchPlaying() {
